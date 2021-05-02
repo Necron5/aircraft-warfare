@@ -3,6 +3,8 @@ from random import *
 
 # Small
 class SmallEnemy(pygame.sprite.Sprite):
+    energy = 2
+
     def __init__(self, bg_size):
         pygame.sprite.Sprite.__init__(self)
 
@@ -25,6 +27,10 @@ class SmallEnemy(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.active = True
 
+        self.energy = SmallEnemy.energy
+        self.hit = False
+
+
     def move(self):
         if self.rect.top < self.height:
             self.rect.top += self.speed
@@ -35,6 +41,8 @@ class SmallEnemy(pygame.sprite.Sprite):
         self.rect.left = randint(0, (self.width - self.rect.width))
         self.rect.top = randint(-5 * self.rect.height, -5)
         self.active = True
+        self.hit = False
+        self.energy = SmallEnemy.energy
 
 
 # Medium

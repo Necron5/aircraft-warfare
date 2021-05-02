@@ -341,7 +341,7 @@ def main():
                     if enemies_hit:
                         b.active = False
                         for e in enemies_hit:
-                            if e in large_enemies or e in medium_enemies:
+                            if e in large_enemies or e in medium_enemies or e in small_enemies:
                                 e.energy -= 1
                                 e.hit = True
                                 if e.energy == 0:
@@ -353,7 +353,29 @@ def main():
             for each in small_enemies:
                 if each.active:
                     each.move()
+
+                    if each.hit:
+                        each.hit = False
+                    
                     screen.blit(each.image, each.rect)
+
+                    # Energy bar
+                    pygame.draw.line(screen, BLACK, \
+                                    (each.rect.left, each.rect.top - 5), \
+                                    (each.rect.right, each.rect.top - 5), \
+                                    2)
+                                
+                    energy_remain = each.energy / enemy.SmallEnemy.energy
+                    if energy_remain > 0.5:
+                        energy_color = GREEN
+                    else:
+                        energy_color = RED
+                    # Re-draw the energy bar
+                    pygame.draw.line(screen, energy_color, \
+                                    (each.rect.left, each.rect.top - 5), \
+                                    (each.rect.left + each.rect.width * energy_remain, each.rect.top - 5), \
+                                    2)
+
                 else:
                     if not delay % 3:
                         screen.blit(each.destroy_images[se_destroy_index], each.rect)
